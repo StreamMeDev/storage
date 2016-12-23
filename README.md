@@ -1,8 +1,15 @@
-# storage
+# A Web Storage Wrapper
 
 [![js-happiness-style](https://img.shields.io/badge/code%20style-happiness-brightgreen.svg)](https://github.com/JedWatson/happiness)
 
-web storage for cookies/localStorage/sessionStorage with expiration and other helpful features
+Web storage for cookies/localStorage/sessionStorage/memory with expiration and other helpful features.
+
+**Features:**
+
+- Multiple storage drivers guarantee at minimum in memory storage
+- Filter value, useful for storing json or other non-string data
+- Filter key, useful for consolidating keys
+- Use cookie like path and expires with local and session storage
 
 ## Install
 
@@ -13,37 +20,31 @@ $ npm install --save @streamme/storage
 ## Usage
 
 ```javascript
-var module = require('@streamme/storage');
+var Storage = require('@streamme/storage');
 
-// ...
+var store = new Storage({
+	// backend: null, specify a backend with either a 
+	// string name or constructor function
+	backend: 'memory'
+
+	// Sets the domain, only used with cookies
+	domain: 'example.com',
+
+	// Filter function for getting and settting
+	setValueFilter: identity,
+	getValueFilter: identity,
+
+	// Filter function for the key
+	keyFilter: identity
+});
+
+store.setItem('foo', 'bar');
+store.getItem('foo'); // 'bar'
+store.removeItem('foo');
+store.getItem('foo'); // undefined
+store.clear('foo'); // undefined
 ```
 
-## Development
+## Contributing
 
-This package follows semver, when you wish to publish a version run the proper npm command.  For example, if we made a bug fix you can do this:
-
-```
-$ npm version patch
-$ git push
-$ npm publish
-```
-
-Here are the other types of version bumps:
-
-- Major (`npm version major`): This is for breaking changes. Anytime a method is changed or the functionality is modified this bump should be made.
-- Minor (`npm version minor`): This is for features additions. When a new method is added which doesn't affect the behavior of existing features, this bump should be made.
-- Patch (`npm version patch`): This is for bug fixes. Only bump this if it is safe for production code to update wihout being QA'd.  (AKA, almost never)
-
-For each of these you can run a 'pre' version by prepending to the command, ex `npm version preminor`.
-
-All feature development should be done on a branch off `master`.  When a feature is complete and the pull request approved, publish a 'pre' version of the package for testing across environments.  To install that 'pre' version of the package do the following, where the verison number contains the correct 'pre' version:
-
-```
-$ npm install --save @streamme/storage@1.0.0-0
-```
-
-Running the tests:
-
-```
-$ npm install && npm test
-```
+Contributions are welcome.  Please see our guidelines in [CONTRIBUTING.md](contributing.md).
