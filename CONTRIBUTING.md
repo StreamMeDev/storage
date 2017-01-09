@@ -19,7 +19,7 @@ For each of these you can run a 'pre' version by prepending to the command, ex `
 All feature development should be done on a branch off `master`.  When a feature is complete and the pull request approved, publish a 'pre' version of the package for testing across environments.  To install that 'pre' version of the package do the following, where the verison number contains the correct 'pre' version:
 
 ```
-$ npm install --save @streamme/simple-test-server@1.0.0-0
+$ npm install --save @streammedev/simple-test-server@1.0.0-0
 ```
 
 Running the tests:

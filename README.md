@@ -1,5 +1,7 @@
 # A Web Storage Wrapper
 
+[![NPM Version](https://img.shields.io/npm/v/@streammedev/storage.svg)](https://npmjs.org/package/@streammedev/storage)
+[![NPM Downloads](https://img.shields.io/npm/dm/@streammedev/storage.svg)](https://npmjs.org/package/@streammedev/storage)
 [![js-happiness-style](https://img.shields.io/badge/code%20style-happiness-brightgreen.svg)](https://github.com/JedWatson/happiness)
 
 Web storage for cookies/localStorage/sessionStorage/memory with expiration and other helpful features.
@@ -14,13 +16,13 @@ Web storage for cookies/localStorage/sessionStorage/memory with expiration and o
 ## Install
 
 ```
-$ npm install --save @streamme/storage
+$ npm install --save @streammedev/storage
 ```
 
 ## Usage
 
 ```javascript
-var Storage = require('@streamme/storage');
+var Storage = require('@streammedev/storage');
 
 var store = new Storage({
 	// backend: null, specify a backend with either a 
