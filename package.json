@@ -1,0 +1,34 @@
+{
+  "name": "@streammedev/storage",
+  "version": "1.0.0",
+  "description": "web storage for cookies/localStorage/sessionStorage with expiration and other helpful features",
+  "main": "index.js",
+  "keywords": [
+    "cookie",
+    "localstorage",
+    "sessionstorage",
+    "web storage"
+  ],
+  "author": "StreamMe",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:StreamMeDev/storage"
+  },
+  "scripts": {
+    "test": "npm run babel && happiness && mochify",
+    "prepublish": "npm test",
+    "postpublish": "git push && git push --tags",
+    "babel": "babel src -d lib",
+    "dev": "babel --watch src -d lib"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "happiness": "^7.1.2",
+    "mochify": "^2.18.1"
+  },
+  "dependencies": {
+    "browser-cookies": "github:wesleytodd/browser-cookies"
+  }
+}
