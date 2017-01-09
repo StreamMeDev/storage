@@ -67,7 +67,7 @@ CookieStore.prototype.getItem = function (key) {
 CookieStore.prototype.removeItem = cookies.erase;
 
 CookieStore.prototype.clear = function () {
-	var c = cookies.get();
+	var c = cookies.all();
 	for (var i in c) {
 		this.removeItem(i);
 	}
