@@ -29,20 +29,16 @@ CookieStore.prototype.setItem = function (key, val, params = {}) {
 		params.expires = params.expires / (60 * 60 * 24);
 	}
 
-	// Save some meta data about this cookie if the
-	// value is not a string.
+	// If the value is not a string, stringify it,
+	// and save the metadata about it so we can
+	// parse it on get
 	if (typeof val !== 'string') {
-		try {
-			var meta = JSON.parse(cookies.get(this.metaKey)) || {};
-			meta[key] = {
-				stringify: true
-			};
-			cookies.set(this.metaKey, JSON.stringify(meta));
-			val = JSON.stringify(val);
-		} catch (e) {
-			// Dont save the key
-			return;
-		}
+		var meta = getMetaCookie(this.metaKey);
+		meta[key] = {
+			stringify: true
+		};
+		saveMeta(this.metaKey, meta);
+		val = JSON.stringify(val);
 	}
 
 	return cookies.set(key, val, params);
@@ -50,25 +46,51 @@ CookieStore.prototype.setItem = function (key, val, params = {}) {
 
 CookieStore.prototype.getItem = function (key) {
 	// Load meta for key
-	try {
-		var m = JSON.parse(cookies.get(this.metaKey)) || {};
-		var meta = (m && m[key]) || {};
-	} catch (e) {
-		// Ignore
-	}
+	var m = getMetaCookie(this.metaKey);
+	var meta = (m && m[key]) || {};
 
+	// Get cookie
 	var val = cookies.get(key);
 	if (val && meta.stringify) {
 		return JSON.parse(val);
 	}
+
+	// Remove meta if we have it but no cookie (expired?)
+	if (typeof val === 'undefined' && meta) {
+		delete m[key];
+		saveMeta(this.metaKey, m);
+	}
+
 	return val;
 };
 
-CookieStore.prototype.removeItem = cookies.erase;
+CookieStore.prototype.removeItem = function (key) {
+	// Remove from meta
+	var m = getMetaCookie(key);
+	delete m[key];
+	saveMeta(this.metaKey, m);
+
+	return cookies.erase(key);
+};
 
 CookieStore.prototype.clear = function () {
 	var c = cookies.all();
 	for (var i in c) {
-		this.removeItem(i);
+		cookies.erase(i);
 	}
+	cookies.erase(this.metaKey);
 };
+
+function getMetaCookie (key) {
+	var m;
+	try {
+		m = JSON.parse(cookies.get(key) || {});
+	} catch (e) {
+		// Ignore
+	}
+	return m || {};
+}
+
+function saveMeta (key, val) {
+	cookies.set(key, JSON.stringify(val));
+}
