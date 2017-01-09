@@ -1,6 +1,6 @@
 {
   "name": "@streammedev/storage",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "web storage for cookies/localStorage/sessionStorage with expiration and other helpful features",
   "main": "index.js",
   "keywords": [
