@@ -29,6 +29,6 @@
     "mochify": "^2.18.1"
   },
   "dependencies": {
-    "browser-cookies": "github:wesleytodd/browser-cookies"
+    "browser-cookies": "^1.1.0"
   }
 }
